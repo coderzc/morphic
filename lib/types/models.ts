@@ -95,7 +95,7 @@ export const models: Model[] = [
   ...openaiCompatibleModels.map((model) => ({
     id: model,
     name: model,
-    provider: 'Custom',
+    provider: process.env.NEXT_PUBLIC_CUSTOM_PROVIDER_NAME || 'Custom',
     providerId: 'openai-compatible'
   }))
 ]
