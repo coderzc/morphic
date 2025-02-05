@@ -66,7 +66,7 @@ export async function executeToolCall(
 
             If you don't need a tool, respond with <tool_call><tool></tool></tool_call>`,
     messages: coreMessages,
-    temperature: 0.2
+    temperature: 0.1
   })
 
   // Parse the tool selection XML using the search schema

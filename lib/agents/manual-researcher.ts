@@ -58,7 +58,7 @@ export function manualResearcher({
       model: getModel(model),
       system: `${systemPrompt}\nCurrent date and time: ${currentDate}`,
       messages,
-      temperature: 0.6,
+      temperature: 0.5,
       topP: 1,
       topK: 40,
       experimental_transform: smoothStream({ chunking: 'word' })

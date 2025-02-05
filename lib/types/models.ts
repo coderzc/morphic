@@ -45,6 +45,12 @@ export const models: Model[] = [
     providerId: 'deepseek'
   },
   {
+    id: 'gemini-2.0-flash',
+    name: 'Gemini 2.0 Flash (Exp)',
+    provider: 'Google Generative AI',
+    providerId: 'google'
+  },
+  {
     id: 'gemini-2.0-pro-exp-02-05',
     name: 'Gemini 2.0 Pro (Exp)',
     provider: 'Google Generative AI',
@@ -53,12 +59,6 @@ export const models: Model[] = [
   {
     id: 'gemini-2.0-flash-thinking-exp-01-21',
     name: 'Gemini 2.0 Flash Thinking (Exp)',
-    provider: 'Google Generative AI',
-    providerId: 'google'
-  },
-  {
-    id: 'gemini-2.0-flash',
-    name: 'Gemini 2.0 Flash',
     provider: 'Google Generative AI',
     providerId: 'google'
   },
@@ -95,7 +95,7 @@ export const models: Model[] = [
   ...openaiCompatibleModels.map((model) => ({
     id: model,
     name: model,
-    provider: '百度千帆',
+    provider: 'Custom',
     providerId: 'openai-compatible'
   }))
 ]
