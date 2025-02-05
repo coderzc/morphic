@@ -61,7 +61,7 @@ export function ModelSelector() {
           {selectedModel ? (
             <div className="flex items-center space-x-1">
               <Image
-                src={`/providers/logos/${selectedModel.providerId}.svg`}
+                src={`/providers/logos/${selectedModel.id.includes('deepseek') ? 'deepseek' : selectedModel.providerId}.svg`}
                 alt={selectedModel.provider}
                 width={18}
                 height={18}
@@ -96,7 +96,7 @@ export function ModelSelector() {
                     >
                       <div className="flex items-center space-x-2">
                         <Image
-                          src={`/providers/logos/${model.providerId}.svg`}
+                          src={`/providers/logos/${model.id.includes('deepseek') ? 'deepseek' : model.providerId}.svg`}
                           alt={model.provider}
                           width={18}
                           height={18}
