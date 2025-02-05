@@ -2,7 +2,7 @@ import { anthropic } from '@ai-sdk/anthropic'
 import { createAzure } from '@ai-sdk/azure'
 import { deepseek } from '@ai-sdk/deepseek'
 import { createFireworks, fireworks } from '@ai-sdk/fireworks'
-import { google } from '@ai-sdk/google'
+import { createGoogleGenerativeAI, google } from '@ai-sdk/google'
 import { groq } from '@ai-sdk/groq'
 import { createOpenAI, openai } from '@ai-sdk/openai'
 import {
@@ -15,7 +15,10 @@ import { createOllama } from 'ollama-ai-provider'
 export const registry = createProviderRegistry({
   openai,
   anthropic,
-  google,
+  google: createGoogleGenerativeAI({
+    apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+    baseURL: process.env.GOOGLE_GENERATIVE_AI_BASE_URL
+  }),
   groq,
   ollama: createOllama({
     baseURL: `${process.env.OLLAMA_BASE_URL}/api`
@@ -33,7 +36,7 @@ export const registry = createProviderRegistry({
   },
   'openai-compatible': createOpenAI({
     apiKey: process.env.OPENAI_COMPATIBLE_API_KEY,
-    baseURL: process.env.OPENAI_COMPATIBLE_API_BASE_URL
+    baseURL: process.env.OPENAI_COMPATIBLE_API_BASE_URL,
   })
 })
 
@@ -81,6 +84,16 @@ export function getModel(model: string) {
     })
   }
 
+
+  if (model.includes('deepseek-r1')) {
+    return wrapLanguageModel({
+      model: registry.languageModel(model),
+      middleware: extractReasoningMiddleware({
+        tagName: 'think'
+      })
+    })
+  }
+
   return registry.languageModel(model)
 }
 
@@ -105,8 +118,7 @@ export function isProviderEnabled(providerId: string): boolean {
     case 'openai-compatible':
       return (
         !!process.env.OPENAI_COMPATIBLE_API_KEY &&
-        !!process.env.OPENAI_COMPATIBLE_API_BASE_URL &&
-        !!process.env.NEXT_PUBLIC_OPENAI_COMPATIBLE_MODEL
+        !!process.env.OPENAI_COMPATIBLE_API_BASE_URL
       )
     default:
       return false
@@ -132,7 +144,7 @@ export function getToolCallModel(model?: string) {
     case 'google':
       return getModel('google:gemini-2.0-flash')
     default:
-      return getModel('openai:gpt-4o-mini')
+      return getModel(provider + ':' + modelName)
   }
 }
 

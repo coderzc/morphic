@@ -65,7 +65,8 @@ export async function executeToolCall(
             ${searchSchemaString}
 
             If you don't need a tool, respond with <tool_call><tool></tool></tool_call>`,
-    messages: coreMessages
+    messages: coreMessages,
+    temperature: 0.2
   })
 
   // Parse the tool selection XML using the search schema
